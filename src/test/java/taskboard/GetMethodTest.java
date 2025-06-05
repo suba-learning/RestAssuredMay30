@@ -1,14 +1,13 @@
 package taskboard;
-
 import io.restassured.response.Response;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GetMethod {
-
+public class GetMethodTest {
     @BeforeEach
     public void setup() {
         // Classic style

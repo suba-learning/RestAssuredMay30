@@ -1,5 +1,6 @@
 package taskboard;
 
+
 import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import io.restassured.http.ContentType;
@@ -10,7 +11,8 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PostMethod {
+
+public class PostMethodTest {
 
     @BeforeEach
     public void setup() {
@@ -22,7 +24,7 @@ public class PostMethod {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("id", 0);
-        jsonObject.put("taskName", "Suba Task IJ");
+        jsonObject.put("taskName", "Suba IJ");
         jsonObject.put("description", "Test Task");
         jsonObject.put("dueDate", "2025-06-03T02:35:10.378Z");
         jsonObject.put("priority", 1);
@@ -41,7 +43,7 @@ public class PostMethod {
 
         response.prettyPrint();
         assertEquals(201, response.statusCode());
-        assertEquals("Suba Task IJ",jp.getString("taskName"));
+        assertEquals("Suba IJ",jp.getString("taskName"));
 
     }
 
