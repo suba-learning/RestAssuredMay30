@@ -1,31 +1,36 @@
 package taskboard;
 
-
-import io.restassured.path.json.JsonPath;
-import org.json.JSONObject;
 import io.restassured.http.ContentType;
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static io.restassured.RestAssured.baseURI;
 
-public class PostMethodTest {
+public class DeleteMethodTest {
 
+    //Import Postmethod first and do the delete for that ID
     @BeforeEach
     public void setup() {
-        baseURI = "https://taskboard.portnov.com";
+        // Classic style
+        baseURI = "https://taskboard.portnov.com/";
     }
 
     @Test
-    public void postTask() {
+    public void deleteTask(){
+
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("id", 0);
-        jsonObject.put("taskName", "Suba IJ");
-        jsonObject.put("description", "Test Task");
+        jsonObject.put("taskName", "Suba Delete Task");
+        jsonObject.put("description", "Test DELETE");
         jsonObject.put("dueDate", "2025-06-03T02:35:10.378Z");
         jsonObject.put("priority", 1);
         jsonObject.put("status","TODO");
@@ -43,14 +48,22 @@ public class PostMethodTest {
 
         response.prettyPrint();
         assertEquals(201, response.statusCode());
-        assertEquals("Suba IJ",jp.getString("taskName"));
-        assertEquals("Test Task",jp.getString("description"));
-        assertEquals("2025-06-03T02:35:10.378Z",jp.getString("dueDate"));
-        assertEquals("1",jp.getString("priority"));
-        assertEquals("TODO",jp.getString("status"));
-        assertEquals("Suba",jp.getString("author"));
+        String taskId= jp.getString("id");
+        System.out.println("Task Id: "+taskId);
+        Response delete_response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/api/v1/Task/" + taskId);
+
+        //System.out.println(delete_response.statusCode());
+        assertEquals(204, delete_response.statusCode());
 
 
+        Response get_response = get("api/v1/Task/"+taskId);
+        int status = get_response.statusCode();
+        assertEquals(404, status);
     }
 
 }
+
+

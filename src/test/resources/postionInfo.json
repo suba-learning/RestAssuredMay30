@@ -1,0 +1,10 @@
+{
+  "title": "Singer Testing",
+  "address": "1 Silly road",
+  "city": "Funny City",
+  "state": "CA",
+  "zip": "90000",
+  "description": "Description of Postion",
+  "dateOpen": "string",
+  "company": "string"
+}
