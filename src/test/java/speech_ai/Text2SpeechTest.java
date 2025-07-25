@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Text2SpeechTest extends BaseRekognition {
     RequestSpecification spec;
@@ -38,6 +39,7 @@ public class Text2SpeechTest extends BaseRekognition {
         Response response = given()
                 .spec(spec)
                 .body(body)
+                .queryParam("voice","Kendra")
                 .when()
                 .post("convert-text-to-speech")
                 .then()
@@ -50,6 +52,8 @@ public class Text2SpeechTest extends BaseRekognition {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        assertTrue(bytes.length>0);
 
 
     }
